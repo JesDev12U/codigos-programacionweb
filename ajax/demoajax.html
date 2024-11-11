@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX</title>
+  </head>
+  <body>
+    <button id="btn-update">Actualizar</button>
+    <select name="numbers" id="numbers"></select>
+  </body>
+  <script src="./ajax.js"></script>
+  <script>
+    const $btnUpdate = document.getElementById("btn-update");
+    const select = document.getElementById("numbers");
+
+    $btnUpdate.addEventListener("click", () =>
+      peticionAjax("GET", "datos.php", select)
+    );
+  </script>
+</html>

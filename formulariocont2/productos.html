@@ -1,0 +1,35 @@
+<html>
+  <head></head>
+  <body>
+    <form action="">
+      <table>
+        <tr>
+          <td>Producto 1:</td>
+          <td>
+            <select name="producto1" onchange="actualizaTotal()">
+              <option value='{producto:"Cheetos",precio:17}'>Cheetos</option>
+              <option value='{producto:"Rancheritos",precio:18}'>
+                Rancheritos
+              </option>
+              <option value='{producto:"Ruffles",precio:20}'>Ruffles</option>
+              <option value='{producto:"Sabritas",precio:20}'>Sabritas</option>
+              <option value='{producto:"Paketaxo",precio:27}'>Paketaxo</option>
+            </select>
+          </td>
+          <td>Cantidad:</td>
+          <td>
+            <input
+              type="number"
+              id="cantidad1"
+              type="number"
+              value="0"
+              onchange="actualizaCantidad()"
+            />
+          </td>
+          <td>Total:</td>
+          <td><input id="total1" readonly /></td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>

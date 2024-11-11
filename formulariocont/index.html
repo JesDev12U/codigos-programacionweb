@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos</title>
+    <style>
+      .products {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .items {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .items > * {
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="products">
+      <form method="POST" action="./nota.php"></form>
+    </div>
+    <template class="items-temp">
+      <div class="items">
+        <p></p>
+        <select></select>
+        <p>Cantidad</p>
+        <input type="number" class="quantity" />
+        <p>Total</p>
+        <input type="number" readonly class="total" />
+      </div>
+    </template>
+    <script>
+      const $template = document.querySelector(".items-temp").content;
+      const $fragment = document.createDocumentFragment();
+      const $products = document.querySelector(".products form");
+
+      //Se pueden consultar los productos mediante una API o consultando en una base de datos
+      const productos = {
+        Cheetos: 17,
+        Rancheritos: 18,
+        Ruffles: 20,
+        Sabritas: 20,
+        Paketaxo: 27,
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        //Se agregan los campos de productos
+        for (let i = 0; i < 6; i++) {
+          let $clone = document.importNode($template, true);
+          $clone
+            .querySelector("select")
+            .setAttribute("name", `producto${i + 1}`);
+          $clone
+            .querySelector(".quantity")
+            .setAttribute("name", `cantidad${i + 1}`);
+          $clone.querySelector(".total").setAttribute("name", `total${i + 1}`);
+          Object.keys(productos).forEach(
+            (el) =>
+              ($clone.querySelector(
+                "select"
+              ).innerHTML += `<option value="${el}">${el}</option>`)
+          );
+          $clone.querySelector("p").textContent = `Producto ${i + 1}`;
+          $clone.querySelector(".quantity").value = 0;
+          $clone.querySelector(".total").value = 0;
+          $fragment.appendChild($clone);
+        }
+
+        //Creamos el boton para el envio del formulario a PHP
+        const $button = document.createElement("button");
+        $button.textContent = "Enviar";
+        $fragment.appendChild($button);
+
+        //Añadimos lo creado dinamicamente en el form
+        $products.appendChild($fragment);
+
+        const $items = document.querySelectorAll(".items");
+
+        $items.forEach((el) => {
+          const updatePrice = () => {
+            let selectedKey =
+              Object.keys(productos)[el.querySelector("select").selectedIndex];
+            el.querySelector(".total").value =
+              productos[selectedKey] * el.querySelector(".quantity").value;
+          };
+
+          el.querySelector(".quantity").addEventListener("change", updatePrice);
+          el.querySelector("select").addEventListener("change", updatePrice);
+        });
+      });
+    </script>
+  </body>
+</html>

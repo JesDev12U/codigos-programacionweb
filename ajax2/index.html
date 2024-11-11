@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX2</title>
+  </head>
+  <body>
+    <button id="btn-update">Actualizar</button>
+    <select name="numbers" id="numbers"></select>
+  </body>
+  <script>
+    const btnUpdate = document.getElementById("btn-update");
+    const numbers = document.getElementById("numbers");
+
+    btnUpdate.addEventListener("click", async () => {
+      try {
+        let response = await fetch("./datos.php", {
+          method: "GET",
+          headers: {
+            "Content-Type": "text/html;charset=utf-8",
+          },
+        });
+        let html = await response.text();
+        numbers.innerHTML = html;
+      } catch (err) {
+        alert("Error al consultar los datos" + err);
+      }
+    });
+  </script>
+</html>

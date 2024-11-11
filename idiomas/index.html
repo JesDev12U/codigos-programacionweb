@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Idiomas</title>
+  </head>
+  <body>
+    <div class="container">
+      <label>Idioma</label>
+      <select name="language" id="language">
+        <option value="spanish">Español</option>
+        <option value="english">Inglés</option>
+      </select>
+      <label>Lista</label>
+      <select id="list"></select>
+    </div>
+    <script>
+      const list = document.getElementById("list");
+      const language = document.getElementById("language");
+
+      async function cargaDatos(value) {
+        try {
+          let response = await fetch(`./controller.php?language=${value}`);
+          let data = await response.text();
+          list.innerHTML = data;
+        } catch (err) {
+          alert("Hubo un error" + err);
+        }
+      }
+
+      cargaDatos(language.value);
+
+      language.addEventListener("change", (e) => cargaDatos(e.target.value));
+    </script>
+  </body>
+</html>
